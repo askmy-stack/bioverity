@@ -1,0 +1,57 @@
+[
+  {
+    "observation_id": "EOR-000001",
+    "species_id": "taxon:lycorma-delicatula",
+    "observed_at": "2024-08-10T14:20:00Z",
+    "location": {
+      "lat": 39.9526,
+      "lon": -75.1652,
+      "ecoregion": "mid-atlantic"
+    },
+    "source": {
+      "provider": "gbif",
+      "source_id": "fixture-1"
+    },
+    "quality": {
+      "coordinate_uncertainty_m": 90,
+      "confidence": 0.91
+    }
+  },
+  {
+    "observation_id": "EOR-000002",
+    "species_id": "taxon:lycorma-delicatula",
+    "observed_at": "2025-08-12T14:20:00Z",
+    "location": {
+      "lat": 40.0379,
+      "lon": -76.3055,
+      "ecoregion": "mid-atlantic"
+    },
+    "source": {
+      "provider": "gbif",
+      "source_id": "fixture-2"
+    },
+    "quality": {
+      "coordinate_uncertainty_m": 120,
+      "confidence": 0.88
+    }
+  },
+  {
+    "observation_id": "EOR-000003",
+    "species_id": "taxon:lycorma-delicatula",
+    "observed_at": "2026-08-12T14:20:00Z",
+    "location": {
+      "lat": 39.2904,
+      "lon": -76.6122,
+      "ecoregion": "mid-atlantic"
+    },
+    "source": {
+      "provider": "inaturalist",
+      "source_id": "fixture-3"
+    },
+    "quality": {
+      "coordinate_uncertainty_m": 140,
+      "confidence": 0.84
+    }
+  }
+]
+

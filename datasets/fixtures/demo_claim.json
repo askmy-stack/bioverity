@@ -1,0 +1,22 @@
+{
+  "claim_id": "ECR-000018",
+  "version": 1,
+  "assertion": {
+    "subject": "species:lycorma-delicatula",
+    "relation": "increases_observed_stress_in",
+    "object": "habitat:mid-atlantic-hardwood-edge"
+  },
+  "context": {
+    "region": "mid-atlantic",
+    "season": "late_summer"
+  },
+  "expected_relationship": {
+    "driver": "temperature",
+    "direction": "positive"
+  },
+  "status": "supported",
+  "support_score": 0.82,
+  "uncertainty": 0.14,
+  "last_tested_at": "2026-09-27T00:00:00Z"
+}
+

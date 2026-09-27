@@ -1,0 +1,11 @@
+policy_id: POL-INVESTIGATE-001
+when:
+  decision_type: next_evidence
+  investigate_probability_gte: 0.65
+  minimum_observations: 100
+  independent_sources_gte: 2
+then:
+  action: open_investigation
+otherwise:
+  action: require_researcher_review
+

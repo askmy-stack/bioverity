@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: bioverity
+      POSTGRES_PASSWORD: bioverity
+      POSTGRES_DB: bioverity
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bioverity -d bioverity"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      sh -c "pip install -e '.[dev]' &&
+             uvicorn bioverity.api.main:app --host 0.0.0.0 --port 8000 --app-dir backend"
+    environment:
+      BIOVERITY_DATABASE_URL: postgresql+psycopg://bioverity:bioverity@db:5432/bioverity
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+

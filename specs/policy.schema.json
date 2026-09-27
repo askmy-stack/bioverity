@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bioverity.org/specs/policy.schema.json",
+  "title": "BioVerity Policy",
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "required": ["pipeline_version", "created_at"],
+      "properties": {
+        "pipeline_version": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_provider": { "type": ["string", "null"] },
+        "source_identifier": { "type": ["string", "null"] },
+        "transformation_steps": { "type": "array", "items": { "type": "string" } },
+        "quality_flags": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "type": "object",
+  "required": ["policy_id", "when", "then", "otherwise"],
+  "properties": {
+    "policy_id": { "type": "string" },
+    "when": { "type": "object" },
+    "then": { "type": "object", "required": ["action"] },
+    "otherwise": { "type": "object", "required": ["action"] }
+  }
+}
+

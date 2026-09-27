@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bioverity.org/specs/eir.schema.json",
+  "title": "Ecological Investigation Record",
+  "type": "object",
+  "required": ["investigation_id", "claim_id", "trigger", "opened_at", "status", "hypotheses"],
+  "properties": {
+    "investigation_id": { "type": "string" },
+    "claim_id": { "type": "string" },
+    "trigger": { "type": "string" },
+    "opened_at": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["active", "closed", "paused"] },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["hypothesis_id", "description", "predictions", "required_evidence", "uncertainty"],
+        "properties": {
+          "hypothesis_id": { "type": "string" },
+          "description": { "type": "string" },
+          "predictions": { "type": "array", "items": { "type": "string" } },
+          "required_evidence": { "type": "array", "items": { "type": "string" } },
+          "supporting_evidence": { "type": "array", "items": { "type": "string" } },
+          "contradicting_evidence": { "type": "array", "items": { "type": "string" } },
+          "uncertainty": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  }
+}
+

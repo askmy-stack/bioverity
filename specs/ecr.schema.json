@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bioverity.org/specs/ecr.schema.json",
+  "title": "Ecological Claim Record",
+  "type": "object",
+  "required": ["claim_id", "version", "assertion", "context", "expected_relationship", "status", "support_score", "uncertainty"],
+  "properties": {
+    "claim_id": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "assertion": {
+      "type": "object",
+      "required": ["subject", "relation", "object"],
+      "properties": {
+        "subject": { "type": "string" },
+        "relation": { "type": "string" },
+        "object": { "type": "string" }
+      }
+    },
+    "context": {
+      "type": "object",
+      "required": ["region"],
+      "properties": {
+        "region": { "type": "string" },
+        "season": { "type": "string" }
+      }
+    },
+    "expected_relationship": {
+      "type": "object",
+      "required": ["driver", "direction"],
+      "properties": {
+        "driver": { "type": "string" },
+        "direction": { "enum": ["positive", "negative", "neutral", "unknown"] }
+      }
+    },
+    "status": { "enum": ["supported", "drifting", "contradicted", "insufficient_evidence"] },
+    "support_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "uncertainty": { "type": "number", "minimum": 0, "maximum": 1 },
+    "last_tested_at": { "type": ["string", "null"], "format": "date-time" }
+  }
+}
+
