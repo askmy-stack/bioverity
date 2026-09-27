@@ -1,0 +1,10 @@
+**/__pycache__/
+**/*.pyc
+.git/
+.venv/
+frontend/node_modules/
+frontend/.next/
+datasets/
+assets/
+tests/
+docs/

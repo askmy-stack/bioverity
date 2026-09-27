@@ -1,0 +1,25 @@
+{
+  "observation_id": "EOR-INVALID-001",
+  "species_id": "taxon:lycorma-delicatula",
+  "observed_at": "2024-08-10T14:20:00Z",
+  "location": {
+    "lat": 39.9526,
+    "lon": -75.1652,
+    "ecoregion": "mid-atlantic"
+  },
+  "source": {
+    "provider": "gbif",
+    "source_id": "fixture-invalid"
+  },
+  "quality": {
+    "coordinate_uncertainty_m": 90,
+    "confidence": 0.91
+  },
+  "provenance": {
+    "source_provider": "gbif",
+    "source_identifier": "fixture-invalid",
+    "transformation_steps": ["fixture.normalize:v1"],
+    "pipeline_version": "fixture-0.1.0",
+    "quality_flags": []
+  }
+}

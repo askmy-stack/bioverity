@@ -9,9 +9,9 @@ dist/
 build/
 node_modules/
 .next/
+*.tsbuildinfo
 *.db
 datasets/raw/*
 !datasets/raw/.gitkeep
 datasets/processed/*
 !datasets/processed/.gitkeep
-

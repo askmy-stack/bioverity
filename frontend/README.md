@@ -8,5 +8,4 @@ The frontend directory is a presentable shell for the five MVP screens:
 - VerityDecision Console
 - Evidence Trace
 
-The first implementation milestone is intentionally backend-led. A Next.js application can be initialized here when the API contract stabilizes.
-
+Install and check the frontend with `npm ci --prefix frontend` and `npm run typecheck --prefix frontend`. Run it locally with `npm run dev --prefix frontend`.
