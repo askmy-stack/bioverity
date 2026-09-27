@@ -4,6 +4,8 @@
 
 ![BioVerity loop](assets/bioverity-loop.gif)
 
+The animation follows the synthetic demo fixture. Regenerate it with `pip install -e ".[media]"` and `python scripts/render_repo_gif.py`.
+
 ## MVP Focus
 
 BioVerity starts with one constrained research loop:
@@ -72,4 +74,3 @@ supported claim
 ## Open Source
 
 BioVerity is released under the MIT License. Demo data in `datasets/fixtures/` is synthetic/open fixture content for reproducible development and should be replaced or expanded with properly licensed source data for research claims.
-

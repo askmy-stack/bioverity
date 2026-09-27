@@ -23,6 +23,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+media = ["pillow>=10.4"]
 dev = [
   "pytest>=8.3",
   "ruff>=0.6",
