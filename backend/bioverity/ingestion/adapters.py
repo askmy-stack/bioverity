@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any, Protocol
 
-from bioverity.schemas.records import EcologicalObservation, Location, Quality, SourceRef
+from bioverity.schemas.records import (
+    EcologicalObservation,
+    Location,
+    ObservationProvenance,
+    Quality,
+    SourceRef,
+)
 
 
 @dataclass(frozen=True)
@@ -33,6 +39,7 @@ class GbifAdapter:
         )
 
     def normalize(self, raw: dict[str, Any]) -> EcologicalObservation:
+        source_id = str(raw["key"])
         return EcologicalObservation(
             observation_id=f"EOR-{raw['key']}",
             species_id=f"taxon:{raw['taxonKey']}",
@@ -42,9 +49,19 @@ class GbifAdapter:
                 lon=float(raw["decimalLongitude"]),
                 ecoregion=raw.get("ecoregion", "mid-atlantic"),
             ),
-            source=SourceRef(provider=self.provider, source_id=str(raw["key"])),
+            source=SourceRef(provider=self.provider, source_id=source_id),
             quality=Quality(
                 coordinate_uncertainty_m=float(raw.get("coordinateUncertaintyInMeters", 1000)),
                 confidence=float(raw.get("confidence", 0.8)),
+            ),
+            provenance=ObservationProvenance(
+                source_provider=self.provider,
+                source_identifier=source_id,
+                retrieved_at=datetime.fromisoformat(raw["retrieved_at"])
+                if raw.get("retrieved_at")
+                else datetime.now(UTC),
+                transformation_steps=["gbif.normalize:v1"],
+                pipeline_version="gbif-adapter-0.1.0",
+                quality_flags=list(raw.get("quality_flags", [])),
             ),
         )

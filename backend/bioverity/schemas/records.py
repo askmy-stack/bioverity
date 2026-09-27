@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class ClaimStatus(StrEnum):
@@ -45,6 +45,22 @@ class Provenance(BaseModel):
     quality_flags: list[str] = Field(default_factory=list)
 
 
+class ObservationProvenance(BaseModel):
+    source_provider: str = Field(min_length=1)
+    source_identifier: str = Field(min_length=1)
+    retrieved_at: datetime
+    transformation_steps: list[str]
+    pipeline_version: str = Field(min_length=1)
+    quality_flags: list[str]
+
+    @field_validator("retrieved_at")
+    @classmethod
+    def retrieved_at_has_timezone(cls, value: datetime) -> datetime:
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError("retrieved_at must include a timezone")
+        return value
+
+
 class EcologicalObservation(BaseModel):
     observation_id: str
     species_id: str
@@ -52,6 +68,16 @@ class EcologicalObservation(BaseModel):
     location: Location
     source: SourceRef
     quality: Quality
+    provenance: ObservationProvenance
+
+    @model_validator(mode="after")
+    def source_matches_provenance(self) -> EcologicalObservation:
+        if (
+            self.source.provider != self.provenance.source_provider
+            or self.source.source_id != self.provenance.source_identifier
+        ):
+            raise ValueError("observation source and provenance source must match")
+        return self
 
 
 class EcologicalEvidence(BaseModel):

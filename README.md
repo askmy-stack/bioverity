@@ -39,10 +39,14 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
-uvicorn bioverity.api.main:app --reload --app-dir backend
+docker compose up -d db
+alembic upgrade head
+uvicorn bioverity.api.main:app --reload --app-dir backend --port 8001
 ```
 
-The API will be available at `http://127.0.0.1:8000`.
+The API will be available at `http://127.0.0.1:8001`.
+
+The frontend can be started with `npm ci --prefix frontend` and `npm run dev --prefix frontend`; it runs at `http://127.0.0.1:3000`.
 
 ## Docker
 
@@ -50,7 +54,7 @@ The API will be available at `http://127.0.0.1:8000`.
 docker compose up
 ```
 
-This starts PostgreSQL with PostGIS enabled and the BioVerity API.
+This starts PostgreSQL with PostGIS enabled, applies the observation migration, and starts the BioVerity API at `http://127.0.0.1:8001`. The database is available on host port `5433`. `GET /health` checks the database and PostGIS extension. Set `BIOVERITY_DATABASE_URL` from `.env.example` when running migrations outside Docker with `alembic upgrade head`. Host ports can be changed with `BIOVERITY_DB_PORT` and `BIOVERITY_API_PORT`.
 
 ## Demo
 

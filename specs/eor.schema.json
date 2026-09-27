@@ -3,7 +3,7 @@
   "$id": "https://bioverity.org/specs/eor.schema.json",
   "title": "Ecological Observation Record",
   "type": "object",
-  "required": ["observation_id", "species_id", "observed_at", "location", "source", "quality"],
+  "required": ["observation_id", "species_id", "observed_at", "location", "source", "quality", "provenance"],
   "properties": {
     "observation_id": { "type": "string" },
     "species_id": { "type": "string" },
@@ -32,7 +32,18 @@
         "coordinate_uncertainty_m": { "type": "number", "minimum": 0 },
         "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
       }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_provider", "source_identifier", "retrieved_at", "transformation_steps", "pipeline_version", "quality_flags"],
+      "properties": {
+        "source_provider": { "type": "string", "minLength": 1 },
+        "source_identifier": { "type": "string", "minLength": 1 },
+        "retrieved_at": { "type": "string", "format": "date-time" },
+        "transformation_steps": { "type": "array", "items": { "type": "string" } },
+        "pipeline_version": { "type": "string", "minLength": 1 },
+        "quality_flags": { "type": "array", "items": { "type": "string" } }
+      }
     }
   }
 }
-

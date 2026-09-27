@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from bioverity.claims.evaluator import evaluate_claim
+from bioverity.core.config import settings
+from bioverity.db.health import database_healthy
 from bioverity.decisions.verity import decide_change, decide_evidence
 from bioverity.policies.engine import PolicyContext, evaluate_policy, load_policy
 from bioverity.schemas.records import (
@@ -11,7 +13,9 @@ from bioverity.schemas.records import (
     EvidenceSnapshot,
     PolicyDecision,
 )
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 
 app = FastAPI(title="BioVerity", version="0.1.0")
 
@@ -22,7 +26,15 @@ CLAIMS: dict[str, EcologicalClaim] = {}
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    try:
+        engine = create_engine(settings.database_url)
+        try:
+            database_healthy(engine)
+        finally:
+            engine.dispose()
+    except SQLAlchemyError as exc:
+        raise HTTPException(status_code=503, detail="database unavailable") from exc
+    return {"status": "ok", "database": "ok"}
 
 
 @app.post("/v1/observations", response_model=EcologicalObservation)

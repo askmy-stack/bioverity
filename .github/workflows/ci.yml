@@ -15,5 +15,12 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff format --check .
       - run: ruff check .
-      - run: pytest
-
+      - name: Unit, integration, and schema contract tests
+        run: pytest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - run: npm run typecheck --prefix frontend
